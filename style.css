@@ -1,175 +1,139 @@
+/* RESET */
 * {
   box-sizing: border-box;
+  font-family: "Segoe UI", system-ui, sans-serif;
 }
 
-/* 🌤️ PAGE BACKGROUND */
 body {
-  font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-
-  background-image: url("https://images.unsplash.com/photo-1640655236999-4cd6dfa12d89?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8c2t5JTIwcGljdHVyZXN8ZW58MHx8MHx8fDA%3D");
+  margin: 0;
+  min-height: 100vh;
+  background-image: url("https://images.unsplash.com/photo-1640655236999-4cd6dfa12d89?w=900&auto=format&fit=crop&q=60");
   background-size: cover;
   background-position: center;
-  background-attachment: fixed;
-
-  min-height: 100vh;
-  margin: 0;
-  padding: 40px 20px;
-
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
-/* 📱 PORTRAIT APP CONTAINER */
-body > * {
-  max-width: 720px;
-  width: 100%;
-  text-align: center;
-}
-
-/* 🧠 TITLE */
-h1 {
-  font-weight: 600;
-  font-size: 2.1rem;
-  margin: 0 auto 22px;
-
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(8px);
-  padding: 14px 28px;
+/* MAIN APP CARD (PORTRAIT STYLE) */
+.app {
+  width: 360px;
+  max-width: 92vw;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(6px);
   border-radius: 22px;
-  display: inline-block;
-
+  padding: 18px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
   position: relative;
-  z-index: 5;
+  z-index: 2;
 }
 
-/* 🎛️ CONTROL SECTIONS */
+/* TITLE */
+h1 {
+  text-align: center;
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+/* CONTROLS */
 .controls {
   display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* ROWS */
+.row {
+  display: flex;
   align-items: center;
-  justify-content: center;
-
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(12px);
-  padding: 16px 20px;
-  border-radius: 24px;
-
-  margin: 18px auto;
-  width: 100%;
-
-  border: 2px solid rgba(0,0,0,0.08);
-  box-shadow: 0 16px 32px rgba(0,0,0,0.22);
-
-  position: relative;
-  z-index: 5;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
-.controls label {
-  font-size: 0.95rem;
-  opacity: 0.85;
+label {
+  font-size: 0.85rem;
 }
 
-/* 🎨 COLOR PICKER */
-input[type="color"] {
-  width: 56px;
-  height: 56px;
-  border-radius: 16px;
-  border: 2px solid #333;
-  padding: 0;
-  cursor: pointer;
-  background: white;
-}
-
-/* 🔽 DROPDOWNS */
-select {
-  font-size: 1rem;
-  padding: 10px 14px;
-  border-radius: 16px;
-  border: 2px solid #ccc;
-  background: white;
-  cursor: pointer;
-}
-
-/* 🔘 BUTTONS */
-.controls button {
-  padding: 10px 20px;
-  border-radius: 18px;
+/* BUTTONS */
+button {
   border: none;
-  background: #1f2937;
-  color: white;
-  font-size: 1rem;
+  border-radius: 12px;
+  padding: 8px 12px;
   cursor: pointer;
-  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  background: #f2f2f2;
+  font-size: 0.85rem;
 }
 
-.controls button:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 8px 18px rgba(0,0,0,0.3);
+button.active {
+  background: #ffd6e7;
 }
 
-/* 🔥 ACTIVE TOOL */
-.controls button.active {
-  background: #2563eb;
-  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.35);
+/* COLOR PICKER */
+input[type="color"] {
+  width: 42px;
+  height: 32px;
+  border: none;
+  padding: 0;
+  background: none;
+  cursor: pointer;
 }
 
-/* 🟩 PIXEL GRID */
+/* SELECTS */
+select {
+  border-radius: 10px;
+  padding: 6px;
+  border: 1px solid #ccc;
+}
+
+/* GRID CONTAINER */
+.grid-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+/* PIXEL GRID */
 #grid {
   display: grid;
-  justify-content: center;
-  margin: 28px auto;
-
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(14px);
-  padding: 22px;
-  border-radius: 30px;
-  box-shadow: 0 24px 48px rgba(0,0,0,0.3);
-
-  width: 100%;
-  max-width: 100%;
-
-  position: relative;
-  z-index: 5;
+  gap: 1px;
+  background: #ddd;
+  touch-action: none;
 }
 
-/* ⬜ PIXELS */
+/* PIXELS */
 .pixel {
-  width: 22px;
-  height: 22px;
+  width: 18px;
+  height: 18px;
   background: white;
-  border-radius: 4px;
-  border: 1px solid rgba(0,0,0,0.1);
-  cursor: pointer;
 }
 
-/* 🍩 DONUT RAIN */
+/* DONUT RAIN 🍩 */
 .donut-rain {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  overflow: hidden;
-  z-index: 1;
+  z-index: 0;
 }
 
 .donut-rain span {
   position: absolute;
   top: -10%;
-  font-size: 20px;
+  font-size: 18px;
   opacity: 0.35;
   animation: fall linear infinite;
 }
 
-.donut-rain span:nth-child(1) { left: 6%;  animation-duration: 18s; }
-.donut-rain span:nth-child(2) { left: 18%; animation-duration: 24s; }
-.donut-rain span:nth-child(3) { left: 32%; animation-duration: 20s; }
-.donut-rain span:nth-child(4) { left: 48%; animation-duration: 26s; }
-.donut-rain span:nth-child(5) { left: 63%; animation-duration: 21s; }
-.donut-rain span:nth-child(6) { left: 78%; animation-duration: 25s; }
-.donut-rain span:nth-child(7) { left: 92%; animation-duration: 19s; }
+.donut-rain span:nth-child(1) { left: 10%; animation-duration: 20s; }
+.donut-rain span:nth-child(2) { left: 25%; animation-duration: 24s; }
+.donut-rain span:nth-child(3) { left: 40%; animation-duration: 18s; }
+.donut-rain span:nth-child(4) { left: 55%; animation-duration: 26s; }
+.donut-rain span:nth-child(5) { left: 70%; animation-duration: 22s; }
+.donut-rain span:nth-child(6) { left: 85%; animation-duration: 19s; }
 
 @keyframes fall {
   from { transform: translateY(-10%); }
   to   { transform: translateY(110vh); }
 }
-
