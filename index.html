@@ -1,72 +1,131 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Pixel Art</title>
-  <style>
-    body {
-      font-family: Arial;
-      text-align: center;
-      background: #f7f7f7;
-    }
-
-    #palette button {
-      width: 30px;
-      height: 30px;
-      margin: 3px;
-      border: 2px solid #000;
-      cursor: pointer;
-    }
-
-    #grid {
-      display: grid;
-      grid-template-columns: repeat(16, 20px);
-      justify-content: center;
-      margin: 20px auto;
-    }
-
-    .pixel {
-      width: 20px;
-      height: 20px;
-      background: white;
-      border: 1px solid #ddd;
-      cursor: pointer;
-    }
-  </style>
+  <meta charset="UTF-8">
+  <title>Pixel Art Studio</title>
+  <link rel="stylesheet" href="pixel.css">
 </head>
+
 <body>
 
-<h1>🎨 Pixel Art</h1>
+<h1>🎨 Pixel Art Studio</h1>
 
-<div id="palette">
-  <button style="background:black"></button>
-  <button style="background:red"></button>
-  <button style="background:blue"></button>
-  <button style="background:yellow"></button>
-  <button style="background:green"></button>
-  <button style="background:pink"></button>
+<!-- Color picker -->
+<div class="controls">
+  <input type="color" id="colorPicker" value="#000000">
+  <span>Pick any color</span>
 </div>
 
+<!-- Tools -->
+<div class="controls">
+  <button id="paintTool">🎨 Paint</button>
+  <button id="eraseTool">🧽 Erase</button>
+
+  <label>Eraser size:</label>
+  <select id="eraserSize">
+    <option value="1">1 × 1 (tiny)</option>
+    <option value="2">2 × 2</option>
+    <option value="3">3 × 3</option>
+  </select>
+</div>
+
+<!-- Grid size -->
+<div class="controls">
+  <label>Grid size:</label>
+  <select id="gridSize">
+    <option value="8">8 × 8</option>
+    <option value="16" selected>16 × 16</option>
+    <option value="32">32 × 32</option>
+  </select>
+  <button onclick="createGrid()">🔄 Resize</button>
+</div>
+
+<!-- Pixel grid -->
 <div id="grid"></div>
 
-<button onclick="clearGrid()">🧼 Clear</button>
-<button onclick="saveArt()">💾 Save</button>
+<!-- Actions -->
+<div class="controls">
+  <button onclick="clearGrid()">🧼 Clear</button>
+  <button onclick="saveArt()">💾 Save</button>
+</div>
 
 <script>
   const grid = document.getElementById("grid");
-  let currentColor = "black";
+  const colorPicker = document.getElementById("colorPicker");
+  const gridSizeSelect = document.getElementById("gridSize");
+  const eraserSizeSelect = document.getElementById("eraserSize");
+  const paintBtn = document.getElementById("paintTool");
+  const eraseBtn = document.getElementById("eraseTool");
 
-  // create pixels
-  for (let i = 0; i < 256; i++) {
-    const pixel = document.createElement("div");
-    pixel.className = "pixel";
-    pixel.onclick = () => pixel.style.background = currentColor;
-    grid.appendChild(pixel);
+  let currentColor = colorPicker.value;
+  let isPainting = false;
+  let tool = "paint";
+
+  colorPicker.oninput = () => {
+    currentColor = colorPicker.value;
+    tool = "paint";
+  };
+
+  paintBtn.onclick = () => tool = "paint";
+  eraseBtn.onclick = () => tool = "erase";
+
+  function createGrid() {
+    const size = parseInt(gridSizeSelect.value);
+    grid.innerHTML = "";
+    grid.style.gridTemplateColumns = `repeat(${size}, 22px)`;
+
+    for (let i = 0; i < size * size; i++) {
+      const pixel = document.createElement("div");
+      pixel.className = "pixel";
+
+      pixel.addEventListener("mousedown", () => {
+        isPainting = true;
+        applyTool(i, size);
+      });
+
+      pixel.addEventListener("mouseover", () => {
+        if (isPainting) applyTool(i, size);
+      });
+
+      pixel.addEventListener("contextmenu", (e) => {
+        e.preventDefault();
+        const bg = window.getComputedStyle(pixel).backgroundColor;
+        colorPicker.value = rgbToHex(bg);
+        currentColor = colorPicker.value;
+        tool = "paint";
+      });
+
+      grid.appendChild(pixel);
+    }
   }
 
-  // select color
-  document.querySelectorAll("#palette button").forEach(btn => {
-    btn.onclick = () => currentColor = btn.style.background;
-  });
+  document.addEventListener("mouseup", () => isPainting = false);
+
+  function applyTool(index, gridSize) {
+    const pixels = document.querySelectorAll(".pixel");
+
+    if (tool === "paint") {
+      pixels[index].style.background = currentColor;
+    } else {
+      const size = parseInt(eraserSizeSelect.value);
+      erasePixels(index, gridSize, size);
+    }
+  }
+
+  function erasePixels(startIndex, gridSize, size) {
+    const pixels = document.querySelectorAll(".pixel");
+    const row = Math.floor(startIndex / gridSize);
+    const col = startIndex % gridSize;
+
+    for (let r = 0; r < size; r++) {
+      for (let c = 0; c < size; c++) {
+        const idx = (row + r) * gridSize + (col + c);
+        if (pixels[idx]) {
+          pixels[idx].style.background = "white";
+        }
+      }
+    }
+  }
 
   function clearGrid() {
     document.querySelectorAll(".pixel")
@@ -74,9 +133,19 @@
   }
 
   function saveArt() {
-    alert("Saving comes next 😏🔥");
+    alert("PNG export coming next 🔥📸");
   }
+
+  function rgbToHex(rgb) {
+    const result = rgb.match(/\d+/g);
+    return "#" + result.map(x =>
+      ("0" + parseInt(x).toString(16)).slice(-2)
+    ).join("");
+  }
+
+  createGrid();
 </script>
 
 </body>
 </html>
+
