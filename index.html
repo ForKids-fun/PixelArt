@@ -2,57 +2,24 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Pixel Art Studio</title>
-  <link rel="stylesheet" href="pixel.css">
+  <title>🎨 Pixel Art Studio</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-  <div class="donut-rain">
-    <span>🍩</span><span>🍩</span><span>🍩</span>
-    <span>🍩</span><span>🍩</span><span>🍩</span>
+  <h1>🎨 Pixel Art Studio</h1>
+
+  <div class="controls">
+    <input type="color" id="colorPicker" value="#ff69b4">
+    <button id="paintBtn">🎨 Paint</button>
+    <button id="eraseBtn">🧽 Erase</button>
+    <button id="clearBtn">🧼 Clear</button>
+    <button id="saveBtn">💾 Save</button>
   </div>
 
-  <div class="site">
-    <h1>🎨 Pixel Art Studio</h1>
+  <div id="grid"></div>
 
-    <div class="controls">
-      <label>
-        Pick color
-        <input type="color" id="colorPicker">
-      </label>
-
-      <button id="paintBtn" class="active">🎨 Paint</button>
-      <button id="eraseBtn">🧽 Erase</button>
-
-      <label>
-        Eraser size
-        <select id="eraserSize">
-          <option value="1">1 × 1 (tiny)</option>
-          <option value="2">2 × 2</option>
-          <option value="3">3 × 3</option>
-        </select>
-      </label>
-
-      <label>
-        Grid size
-        <select id="gridSize">
-          <option value="16">16 × 16</option>
-          <option value="24">24 × 24</option>
-          <option value="32">32 × 32</option>
-        </select>
-      </label>
-
-      <button id="resizeBtn">🔄 Resize</button>
-      <button id="clearBtn">🧼 Clear</button>
-      <button id="saveBtn">💾 Save</button>
-    </div>
-
-    <div class="grid-wrapper">
-      <div id="grid"></div>
-    </div>
-  </div>
-
-  <script src="pixel.js"></script>
+  <!-- JS MUST BE LAST -->
+  <script src="script.js"></script>
 </body>
 </html>
