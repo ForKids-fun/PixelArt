@@ -10,16 +10,24 @@
   <h1>🎨 Pixel Art Studio</h1>
 
   <div class="controls">
-    <input type="color" id="colorPicker" value="#ff69b4">
+    <label>
+      🎨 Color
+      <input type="color" id="colorPicker" value="#ff69b4">
+    </label>
+
     <button id="paintBtn">🎨 Paint</button>
     <button id="eraseBtn">🧽 Erase</button>
     <button id="clearBtn">🧼 Clear</button>
-    <button id="saveBtn">💾 Save</button>
+    <button id="saveBtn">💾 Save PNG</button>
   </div>
 
   <div id="grid"></div>
+
+  <!-- Hidden canvas ONLY for exporting -->
+  <canvas id="exportCanvas" style="display:none;"></canvas>
 
   <!-- JS MUST BE LAST -->
   <script src="script.js"></script>
 </body>
 </html>
+
