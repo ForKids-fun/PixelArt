@@ -6,16 +6,16 @@ const clearBtn = document.getElementById("clearBtn");
 const saveBtn = document.getElementById("saveBtn");
 const exportCanvas = document.getElementById("exportCanvas");
 
-const GRID_SIZE = 16;
-const PIXEL_SIZE = 20;
+const GRID_SIZE = 16;     // 16x16 grid for kids
+const PIXEL_SIZE = 20;    // 20px per pixel
 
-let mode = "paint";
+let mode = "paint";       // painting or erasing
 
-// Mode buttons
+// Buttons to switch mode
 paintBtn.onclick = () => mode = "paint";
 eraseBtn.onclick = () => mode = "erase";
 
-// Build pixel grid
+// Create the pixel grid
 grid.style.display = "grid";
 grid.style.gridTemplateColumns = `repeat(${GRID_SIZE}, ${PIXEL_SIZE}px)`;
 
@@ -26,6 +26,7 @@ for (let i = 0; i < GRID_SIZE * GRID_SIZE; i++) {
   pixel.style.height = PIXEL_SIZE + "px";
   pixel.style.background = "white";
 
+  // Click to paint or erase
   pixel.addEventListener("click", () => {
     if (mode === "paint") {
       pixel.style.background = colorPicker.value;
@@ -37,14 +38,14 @@ for (let i = 0; i < GRID_SIZE * GRID_SIZE; i++) {
   grid.appendChild(pixel);
 }
 
-// Clear canvas
+// Clear the canvas
 clearBtn.onclick = () => {
   document.querySelectorAll(".pixel").forEach(p => {
     p.style.background = "white";
   });
 };
 
-// SAVE AS PNG TO FILES / DOWNLOADS
+// SAVE PNG WITH WATERMARK
 saveBtn.onclick = () => {
   const pixels = document.querySelectorAll(".pixel");
 
@@ -53,6 +54,7 @@ saveBtn.onclick = () => {
 
   const ctx = exportCanvas.getContext("2d");
 
+  // Draw pixels
   pixels.forEach((pixel, i) => {
     const x = (i % GRID_SIZE) * PIXEL_SIZE;
     const y = Math.floor(i / GRID_SIZE) * PIXEL_SIZE;
@@ -60,8 +62,18 @@ saveBtn.onclick = () => {
     ctx.fillRect(x, y, PIXEL_SIZE, PIXEL_SIZE);
   });
 
+  // ADD WATERMARK for kids site
+  const watermarkText = "Made from Pixel Art";
+  ctx.font = "20px 'Brush Script MT', cursive"; // fancy script
+  ctx.fillStyle = "rgba(0,0,0,0.4)"; // semi-transparent
+  ctx.textAlign = "right";
+  ctx.textBaseline = "bottom";
+  ctx.fillText(watermarkText, exportCanvas.width - 5, exportCanvas.height - 5);
+
+  // Download PNG
   const link = document.createElement("a");
   link.download = "pixel-art.png";
   link.href = exportCanvas.toDataURL("image/png");
   link.click();
 };
+
