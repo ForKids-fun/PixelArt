@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pixel Art</title>
+  <style>
+    body {
+      font-family: Arial;
+      text-align: center;
+      background: #f7f7f7;
+    }
+
+    #palette button {
+      width: 30px;
+      height: 30px;
+      margin: 3px;
+      border: 2px solid #000;
+      cursor: pointer;
+    }
+
+    #grid {
+      display: grid;
+      grid-template-columns: repeat(16, 20px);
+      justify-content: center;
+      margin: 20px auto;
+    }
+
+    .pixel {
+      width: 20px;
+      height: 20px;
+      background: white;
+      border: 1px solid #ddd;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<h1>🎨 Pixel Art</h1>
+
+<div id="palette">
+  <button style="background:black"></button>
+  <button style="background:red"></button>
+  <button style="background:blue"></button>
+  <button style="background:yellow"></button>
+  <button style="background:green"></button>
+  <button style="background:pink"></button>
+</div>
+
+<div id="grid"></div>
+
+<button onclick="clearGrid()">🧼 Clear</button>
+<button onclick="saveArt()">💾 Save</button>
+
+<script>
+  const grid = document.getElementById("grid");
+  let currentColor = "black";
+
+  // create pixels
+  for (let i = 0; i < 256; i++) {
+    const pixel = document.createElement("div");
+    pixel.className = "pixel";
+    pixel.onclick = () => pixel.style.background = currentColor;
+    grid.appendChild(pixel);
+  }
+
+  // select color
+  document.querySelectorAll("#palette button").forEach(btn => {
+    btn.onclick = () => currentColor = btn.style.background;
+  });
+
+  function clearGrid() {
+    document.querySelectorAll(".pixel")
+      .forEach(p => p.style.background = "white");
+  }
+
+  function saveArt() {
+    alert("Saving comes next 😏🔥");
+  }
+</script>
+
+</body>
+</html>
