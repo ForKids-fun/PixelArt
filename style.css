@@ -1,0 +1,44 @@
+.donut-rain {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* clicks pass through */
+  overflow: hidden;
+  z-index: 0;
+}
+
+.donut-rain span {
+  position: absolute;
+  top: -10%;
+  font-size: 20px;
+  opacity: 0.35;
+  animation: fall linear infinite;
+}
+
+/* Different positions & speeds */
+.donut-rain span:nth-child(1) { left: 5%;  animation-duration: 18s; }
+.donut-rain span:nth-child(2) { left: 18%; animation-duration: 22s; }
+.donut-rain span:nth-child(3) { left: 35%; animation-duration: 20s; }
+.donut-rain span:nth-child(4) { left: 50%; animation-duration: 26s; }
+.donut-rain span:nth-child(5) { left: 65%; animation-duration: 21s; }
+.donut-rain span:nth-child(6) { left: 80%; animation-duration: 24s; }
+.donut-rain span:nth-child(7) { left: 92%; animation-duration: 19s; }
+
+@keyframes fall {
+  from {
+    transform: translateY(-10%);
+  }
+  to {
+    transform: translateY(110vh);
+  }
+}
+
+/* Keep app content ABOVE donuts */
+h1,
+.controls,
+#grid {
+  position: relative;
+  z-index: 2;
+}
